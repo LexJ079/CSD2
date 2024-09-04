@@ -1,0 +1,19 @@
+Wat doet [git diff]?
+> Meldt veranderingen van bestanden binnen de repository.
+
+Wat doet [git fetch]?
+> Download commits en bestanden van een remote repository naar je lokale repository.
+
+Wat doet [git pull]?
+> git pull downloadt bestanden van een remote repo en update gelijk de lokale repo om het te matchen. Het is een combinatie van de commands: [git fetch] en [git merge].
+
+Wat doet [git log]?
+> Git log laat alle commit logs zien.
+
+Wat doet [git push]?
+> Uploadt bestanden van de lokale repo naar de remote repo.
+
+Git justification:
+Branches zorgen voor overzichtelijk werkruimte voor elke versie en verandering.
+Met de lokale repo kan je snel werken aan een groter project zonder afhankelijk te zijn van een stabiele internet verbinding.
+Omdat het heel veel gebruikt wordt kan je aansluiten bij al bestaande projecten zonder te veel training of uitleg van te voren.

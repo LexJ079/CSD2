@@ -4,7 +4,7 @@ import simpleaudio as sa
 times = int(input("Hoe vaak moet het geluid afspelen? "))
 
 # Laadt de audio file (synth.wav)
-wave_obj = sa.WaveObject.from_wave_file("/Users/lex/HKU/Jaar2/CSD2/python_basics/synth.wav")
+wave_obj = sa.WaveObject.from_wave_file("synth.wav")
 
 # Speelt het geluid het opgegeven aantal keren af
 for i in range(times):

@@ -1,11 +1,5 @@
-# User input
-#“Bij het uitvoeren van het script wordt de default BPM aan de gebruiker getoond. Daarna krijgt de
-#gebruiker de mogelijkheid om in de terminal een andere BPM in te voeren die vanaf dat moment gebruikt
-#wordt.“
-#Denk hierbij ook aan het volgende: wat doet je script wanneer een gebruiker verkeerde input geeft? Wat
-#is verkeerde input en met welke input kun je wel iets?
-
 import simpleaudio as sa
+import time
 
 def vraag_bpm():
     # Functie om BPM te vragen en te checken
@@ -13,7 +7,7 @@ def vraag_bpm():
         antwoord = input("De default tempo is 120 BPM. Wil je dit aanpassen? [y/n] ").strip().lower()
         if antwoord == "y":
             try:
-                bpm = int(input("Vul hier de BPM in: ").strip())
+                bpm = int(input("Vul hier de BPM in: "))
                 if bpm > 0:
                     return bpm
                 else:
@@ -25,31 +19,51 @@ def vraag_bpm():
         else:
             print("Ongeldige invoer. Voer 'y' of 'n' in.")
 
-#load sample
+# Laad sample
 rimSample = sa.WaveObject.from_wave_file("rimSample.wav")
 
 # Functie om de durations van kwartnoten om te zetten naar timestamps in zestienden
 def durationsToTimestamps16th(srcSeq, bpm):
+
     # Bereken de duur van een zestiende noot in seconden
-    sixteenth_duration = 60 / (bpm * 4)
+    sixteenthDuration = 60 / (bpm * 4)
     timestamps = []
-    current_time = 0.0
+    currentTime = 0.0
 
     # Bereken de timestamps voor elke duur in srcSeq
     for duration in srcSeq:
-        timestamps.append(current_time)
-        current_time += duration * 4 * sixteenth_duration
+        timestamps.append(currentTime)
+        currentTime += duration * 4 * sixteenthDuration
 
     return timestamps
 
-# Vraag de BPM aan de gebruiker
+# Functie om zestienden timestamps om te zetten naar seconden
+def timestampsToSeconds(timestamps, bpm):
+
+    # Bereken de duur van een zestiende noot in seconden
+    sixteenthDuration = 60 / (bpm * 4)
+    return [ts * sixteenthDuration for ts in timestamps]
+
+# Functie om de sample af te spelen op basis van tijdstempels
+def playSequence(timestampsInSeconden):
+    for timestamp in timestampsInSeconden:
+        time.sleep(timestamp)  # Wacht tot de juiste tijd
+        rimSample.play()  # Speel de sample af
+        time.sleep(0.001)  # Kleine pauze om overlap te voorkomen
+
 bpm = vraag_bpm()
 print("De BPM is nu:", bpm)
-
 
 # Ritmische sequence in kwartnoten
 noteDurSeq = [1, 1.5, 0.5, 1]
 
 # Roep de functie aan om de timestamps te berekenen
 timestamps = durationsToTimestamps16th(noteDurSeq, bpm)
-print("Tijdstempels in zestienden:", timestamps)
+print("Timestamps in zestienden:", timestamps)
+
+# Zet de timestamps in zestienden om naar tijd in seconden
+timestampsInSeconden = timestampsToSeconds(timestamps, bpm)
+print("Timestamps in seconden:", timestampsInSeconden)
+
+playSequence(timestampsInSeconden)
+

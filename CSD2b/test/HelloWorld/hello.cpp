@@ -8,5 +8,11 @@ int main () {
 	std::cin >> yourName;
 	std::cout << "Hi, " << yourName << std::endl;
 
+	std::cout << "and what is your age?" << std::endl;
+
+	std::string yourAge;
+	std::cin >> yourAge;
+	std::cout << "Age = " << yourAge << std::endl;
+
 
 }

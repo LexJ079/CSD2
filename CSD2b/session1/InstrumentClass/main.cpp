@@ -1,17 +1,4 @@
-#include <iostream>
-#include <string>
-
-class Instrument
-{
-public:
-    std::string name;
-    std::string sound;
-
-    void play()
-    {
-        std::cout << name << " sounds like " << sound << std::endl;
-    }
-};
+#include "Instrument.h"
 
 int main()
 {

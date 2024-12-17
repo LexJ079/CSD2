@@ -1,3 +1,0 @@
-/Users/lex/HKU/Jaar2/CSD2/CSD2b/session2/test/cmake/build/CMakeFiles/Instrument.dir
-/Users/lex/HKU/Jaar2/CSD2/CSD2b/session2/test/cmake/build/CMakeFiles/edit_cache.dir
-/Users/lex/HKU/Jaar2/CSD2/CSD2b/session2/test/cmake/build/CMakeFiles/rebuild_cache.dir

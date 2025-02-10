@@ -1,61 +1,20 @@
-//
-// Created by Dean on 02/12/2023.
-//
-
-#include "audiocomponent.h"
 #include <iostream>
-#include <random>
-
-struct CustomCallback : AudioCallback {
-    explicit CustomCallback (double Fs) : AudioCallback(Fs) {
-
-    }
-
-    ~CustomCallback() override {
-
-    }
-
-    void prepare (int sampleRate) override {
-
-    }
-
-    void process (AudioBuffer buffer) override {
-        auto [inputChannels, outputChannels, numInputChannels, numOutputChannels, numFrames] = buffer;
-
-        for (int channel = 0u; channel < numOutputChannels; ++channel) {
-            for (int sample = 0u; sample < numFrames; ++sample) {
-                outputChannels[channel][sample] = static_cast<float> (distribution(generator)) * 0.2f;
-            }
-        }
-    }
-
-private:
-    std::random_device randomDevice;
-    std::mt19937 generator{randomDevice()};
-    std::uniform_real_distribution<> distribution{-1.0, 1.0};
-
-};
-
-
+#include "sine.h"
+#include "writeToFile.h"
 
 
 int main() {
-    ScopedMessageThreadEnabler scopedMessageThreadEnabler;
-    CustomCallback audioSource (44100);
-    JUCEModule juceModule (audioSource);
-    juceModule.init(1,1);
+  // create sine wave
+  Sine sine(1);
+  std::cout << "Sine frequency: " << sine.getFrequency() << "\n";
+  // write 1 second of samples to file
+  // second parameter - overwrite is set to true
+WriteToFile fileWriter("output.csv", true);
+  for(int i = 0; i < SAMPLERATE; i++) {
+    fileWriter.write(std::to_string(sine.getSample()) + "\n");
+    sine.tick();
+  }
 
-
-    std::cout << "Press q + Enter to quit..." << std::endl;
-    bool running = true;
-    while (running) {
-        switch (std::cin.get()) {
-            case 'q':
-                running = false;
-                break;
-        }
-    }
-
-
-    return 0;
+  // end of program
+  return 0;
 }
